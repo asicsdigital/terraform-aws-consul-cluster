@@ -1,0 +1,107 @@
+[
+        {
+            "name": "consul_cluster-${env}",
+            "image": "consul",
+            "memoryReservation": 512,
+            "environment": [
+                {
+                    "name": "CONSUL_LOCAL_CONFIG",
+                    "value": "{\"skip_leave_on_interrupt\": true, \"datacenter\":\"${datacenter}\", \"performance\": { \"raft_multiplier\": ${raft_multiplier} }}"
+                },
+                {
+                    "name": "CONSUL_BIND_INTERFACE",
+                    "value": "eth0"
+                },
+                {
+                    "name": "CONSUL_ALLOW_PRIVILEGED_PORTS",
+                    "value": ""
+                }
+            ],
+            "command": [
+              "agent", "-server", "-retry-join-ec2-tag-key=Name", "-retry-join-ec2-tag-value=${join_ec2_tag}", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-dns-port=53"
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "${awslogs_group}",
+                   "awslogs-region": "${awslogs_region}",
+                   "awslogs-stream-prefix": "${awslogs_stream_prefix}"
+                }
+              }
+        },
+        {
+            "name": "registrator-${env}",
+            "image": "gliderlabs/registrator",
+            "memoryReservation": 256,
+            "command": [
+              "-retry-attempts=10", "-retry-interval=1000", "consul://localhost:8500"
+            ],
+            "mountPoints": [
+              {
+                "sourceVolume": "docker-sock",
+                "containerPath": "/tmp/docker.sock"
+              }
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "${awslogs_group}",
+                   "awslogs-region": "${awslogs_region}",
+                   "awslogs-stream-prefix": "${awslogs_stream_prefix}"
+                }
+              }
+        },
+        {
+            "name": "consul-ui-${env}",
+            "image": "fitnesskeeper/oauth2_proxy:add-basic-auth",
+            "memoryReservation": 128,
+            "portMappings": [
+                {
+                    "containerPort": 4180
+                }
+            ],
+            "environment": [
+                {
+                  "name": "HTPASSWD",
+                  "value": "${sha_htpasswd_hash}"
+                },
+                {
+                  "name": "OAUTH2_PROXY_HTPASSWD_FILE",
+                  "value": "${oauth2_proxy_htpasswd_file}"
+                },
+                {
+                    "name": "OAUTH2_PROXY_PROVIDER",
+                    "value": "${oauth2_proxy_provider}"
+                },
+                {
+                    "name": "OAUTH2_PROXY_GITHUB_ORG",
+                    "value": "${oauth2_proxy_github_org}"
+
+                },
+                {
+                    "name": "OAUTH2_PROXY_GITHUB_TEAM",
+                    "value": "${oauth2_proxy_github_team}"
+                },
+                {
+                    "name": "OAUTH2_PROXY_CLIENT_ID",
+                    "value": "${oauth2_proxy_client_id}"
+                },
+                {
+                    "name": "OAUTH2_PROXY_CLIENT_SECRET",
+                    "value": "${oauth2_proxy_client_secret}"
+                },
+                {
+                    "name": "OAUTH2_PROXY_UPSTREAM",
+                    "value": "http://localhost:8500"
+                }
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "${awslogs_group}",
+                   "awslogs-region": "${awslogs_region}",
+                   "awslogs-stream-prefix": "${awslogs_stream_prefix}"
+                }
+              }
+        }
+]
