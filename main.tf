@@ -32,13 +32,6 @@ data "template_file" "consul" {
 }
 # End Data block
 
-# Stuff to Add
-# https://www.consul.io/docs/guides/autopilot.html
-# Consul health check
-#{"check": {"name": "InstanceStatus", "script": "[ $(aws ec2 describe-instance-status --region us-east-1 --instance-ids $(curl -s http://169.254.169.254/latest/meta-data/instance-id) | jq -r '.InstanceStatuses[0].InstanceStatus.Status') = \"okk\" ] || exit 255", "interval": "30s"}}
-# LifeCycle Terminating:Wait
-# aws ec2 describe-instances --region us-east-1 --instance-ids $(curl -s http://169.254.169.254/latest/meta-data/instance-id) | jq '.Reservations[0].Instances[0].State'
-
 resource "aws_ecs_task_definition" "consul" {
   family                = "consul-${var.env}"
   container_definitions = "${data.template_file.consul.rendered}"
@@ -62,8 +55,7 @@ resource "aws_ecs_service" "consul" {
   name            = "consul-${var.env}"
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
-  #desired_count   = "${var.cluster_size}"
-  desired_count   = "6"
+  desired_count   = "${var.cluster_size * 2}" # This is not awesome, it lets new AS groups get added to the cluster before destruction.
   placement_constraints {
     type       = "distinctInstance"
   }
