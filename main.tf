@@ -15,6 +15,7 @@ data "template_file" "consul" {
   vars {
     datacenter                 = "${data.aws_vpc.vpc.tags["Name"]}"
     env                        = "${var.env}"
+    image                      = "${var.consul_image}"
     join_ec2_tag               = "${var.join_ec2_tag}"
     awslogs_group              = "consul-${var.env}",
     awslogs_stream_prefix      = "consul-${var.env}",
@@ -33,6 +34,10 @@ data "template_file" "consul" {
 
 # Stuff to Add
 # https://www.consul.io/docs/guides/autopilot.html
+# Consul health check
+#{"check": {"name": "InstanceStatus", "script": "[ $(aws ec2 describe-instance-status --region us-east-1 --instance-ids $(curl -s http://169.254.169.254/latest/meta-data/instance-id) | jq -r '.InstanceStatuses[0].InstanceStatus.Status') = \"okk\" ] || exit 255", "interval": "30s"}}
+# LifeCycle Terminating:Wait
+# aws ec2 describe-instances --region us-east-1 --instance-ids $(curl -s http://169.254.169.254/latest/meta-data/instance-id) | jq '.Reservations[0].Instances[0].State'
 
 resource "aws_ecs_task_definition" "consul" {
   family                = "consul-${var.env}"
@@ -57,7 +62,8 @@ resource "aws_ecs_service" "consul" {
   name            = "consul-${var.env}"
   cluster         = "${var.ecs_cluster_id}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
-  desired_count   = "${var.cluster_size}"
+  #desired_count   = "${var.cluster_size}"
+  desired_count   = "6"
   placement_constraints {
     type       = "distinctInstance"
   }

@@ -7,6 +7,10 @@ variable "cluster_size" {
   description = "Consul cluster size. This must be greater the 3"
 }
 
+variable "consul_image" {
+  description = "Image to use when deploying consul, defaults to the hashicorp consul image"
+  default     = "consul"
+}
 variable "dns_zone" {
   description = "Zone where the Consul UI alb will be created. This should *not* be consul.example.com"
 }

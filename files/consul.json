@@ -1,12 +1,12 @@
 [
         {
             "name": "consul_cluster-${env}",
-            "image": "consul",
+            "image": "${image}",
             "memoryReservation": 512,
             "environment": [
                 {
                     "name": "CONSUL_LOCAL_CONFIG",
-                    "value": "{\"skip_leave_on_interrupt\": true, \"datacenter\":\"${datacenter}\", \"performance\": { \"raft_multiplier\": ${raft_multiplier} }}"
+                    "value": "{ \"raft_protocol\": 3, \"skip_leave_on_interrupt\": true, \"datacenter\":\"${datacenter}\", \"performance\": { \"raft_multiplier\": ${raft_multiplier} }, \"service\": { \"name\": \"InstanceStatus\", \"checks\": [{ \"script\": \"/usr/local/bin/instance-status.sh\", \"interval\": \"30s\" }]}, \"watches\": [ { \"type\": \"service\", \"service\": \"InstanceStatus\", \"handler\": \"/usr/local/bin/instance-status-handler.sh\" } ]}"
                 },
                 {
                     "name": "CONSUL_BIND_INTERFACE",
