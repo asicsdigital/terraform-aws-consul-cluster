@@ -93,6 +93,10 @@
                 {
                     "name": "OAUTH2_PROXY_UPSTREAM",
                     "value": "http://localhost:8500"
+                },
+                {
+                    "name": "SERVICE_NAME",
+                    "value": "oauth2-proxy"
                 }
             ],
             "logConfiguration": {
