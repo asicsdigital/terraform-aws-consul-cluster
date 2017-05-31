@@ -17,27 +17,27 @@ This module
 
 ----------------------
 #### Required
-- `alb_log_bucket` - "s3 bucket to send ALB Logs"
-- `dns_zone" - "Zone where the Consul UI alb will be created. This should *not* be consul.example.com"
-- `ecs_cluster_id" - "ARN of the ECS ID"
-- `env" - "env to deploy into, should typically dev/staging/prod"
-- `join_ec2_tag" - "EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples."
-- `subnets" - "List of subnets used to deploy the Consul alb"
-- `vpc_id"  - "VPC ID"
-- `sha_htpasswd_hash" - "Entries must be created with htpasswd -s for SHA encryption"
-- `oauth2_proxy_github_org" - "Github Org"
-- `oauth2_proxy_client_id" - "the OAuth Client ID: ie: 123456.apps.googleusercontent.com"
-- `oauth2_proxy_client_secret" - "the OAuth Client Secret"
+- `alb_log_bucket` - s3 bucket to send ALB Logs
+- `dns_zone` - Zone where the Consul UI alb will be created. This should *not* be consul.tld.com
+- `ecs_cluster_id` - ARN of the ECS ID
+- `env` - env to deploy into, should typically dev/staging/prod
+- `join_ec2_tag` - EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples.
+- `subnets` - List of subnets used to deploy the Consul alb
+- `vpc_id`  - VPC ID
+- `sha_htpasswd_hash` - Entries must be created with htpasswd -s for SHA encryption
+- `oauth2_proxy_github_org` - Github Org
+- `oauth2_proxy_client_id` - the OAuth Client ID: ie: 123456.apps.googleusercontent.com
+- `oauth2_proxy_client_secret` - the OAuth Client Secret
 
 #### Optional
 
-- `cluster_size` " - "Consul cluster size. This must be greater the 3, defaults to 3"
-- `oauth2_proxy_htpasswd_file` - "Path the htpasswd file defaults to /conf/htpasswd"
+- `cluster_size`  - Consul cluster size. This must be greater the 3, defaults to 3
+- `oauth2_proxy_htpasswd_file` - Path the htpasswd file defaults to /conf/htpasswd
 - `join_ec2_tag_key` - EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name
-- `raft_multiplier" - "An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html defaults to 5"
+- `raft_multiplier" - An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html defaults to 5
 - `region` - AWS Region - defaults to us-east-1
-- `oauth2_proxy_provider` - "OAuth provider defaults to github"
-- `oauth2_proxy_github_team` - "list of teams that should have access defaults to empty list (allow all)"
+- `oauth2_proxy_provider` - OAuth provider defaults to github
+- `oauth2_proxy_github_team` - list of teams that should have access defaults to empty list (allow all)
 
 Usage
 -----
