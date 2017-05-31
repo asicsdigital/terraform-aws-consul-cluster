@@ -33,6 +33,7 @@ This module
 
 - `cluster_size` " - "Consul cluster size. This must be greater the 3, defaults to 3"
 - `oauth2_proxy_htpasswd_file` - "Path the htpasswd file defaults to /conf/htpasswd"
+- `join_ec2_tag_key` - EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name
 - `raft_multiplier" - "An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html defaults to 5"
 - `region` - AWS Region - defaults to us-east-1
 - `oauth2_proxy_provider` - "OAuth provider defaults to github"
@@ -76,4 +77,4 @@ License
 =======
 
 
-[MIT License](LICENSE) 
+[MIT License](LICENSE)

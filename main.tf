@@ -16,6 +16,7 @@ data "template_file" "consul" {
     datacenter                 = "${data.aws_vpc.vpc.tags["Name"]}"
     env                        = "${var.env}"
     image                      = "${var.consul_image}"
+    join_ec2_tag_key           = "${var.join_ec2_tag_key}"
     join_ec2_tag               = "${var.join_ec2_tag}"
     awslogs_group              = "consul-${var.env}",
     awslogs_stream_prefix      = "consul-${var.env}",

@@ -18,7 +18,7 @@
                 }
             ],
             "command": [
-              "agent", "-server", "-retry-join-ec2-tag-key=Name", "-retry-join-ec2-tag-value=${join_ec2_tag}", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-dns-port=53"
+              "agent", "-server", "-retry-join-ec2-tag-key=${join_ec2_tag_key}", "-retry-join-ec2-tag-value=${join_ec2_tag}", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-dns-port=53"
             ],
             "logConfiguration": {
               "logDriver": "awslogs",
