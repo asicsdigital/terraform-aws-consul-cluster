@@ -28,6 +28,7 @@ This module
 - `oauth2_proxy_github_org` - Github Org
 - `oauth2_proxy_client_id` - the OAuth Client ID: ie: 123456.apps.googleusercontent.com
 - `oauth2_proxy_client_secret` - the OAuth Client Secret
+- `s3_backup_bucket` - S3 Bucket to use to store backups of consul snapshots - defaults to backup-bucket
 
 #### Optional
 
@@ -38,7 +39,6 @@ This module
 - `region` - AWS Region - defaults to us-east-1
 - `oauth2_proxy_provider` - OAuth provider defaults to github
 - `oauth2_proxy_github_team` - list of teams that should have access defaults to empty list (allow all)
-- `s3_backup_bucket` - S3 Bucket to use to store backups of consul snapshots - defaults to backup-bucket
 
 Usage
 -----

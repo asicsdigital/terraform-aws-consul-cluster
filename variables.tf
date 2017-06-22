@@ -33,7 +33,6 @@ variable "join_ec2_tag" {
 
 
 variable "s3_backup_bucket" {
-  default     = "backup-bucket"
   description = "S3 Bucket to use to store backups of consul snapshots"
 }
 
