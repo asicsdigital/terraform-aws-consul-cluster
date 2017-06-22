@@ -15,6 +15,10 @@
                 {
                     "name": "CONSUL_ALLOW_PRIVILEGED_PORTS",
                     "value": ""
+                },
+                {
+                    "name": "S3_BUCKET",
+                    "value": "${s3_backup_bucket}"
                 }
             ],
             "command": [
