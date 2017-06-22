@@ -5,8 +5,9 @@ data "aws_iam_policy_document" "consul_task_policy" {
       "autoscaling:Describe*",
       "ec2:DescribeAddresses",
       "ec2:DescribeInstances",
-      "ec2:DescribeTags"
+      "ec2:DescribeTags",
     ]
+
     resources = ["*"]
   }
 }
@@ -14,9 +15,10 @@ data "aws_iam_policy_document" "consul_task_policy" {
 data "aws_iam_policy_document" "assume_role_consul_task" {
   statement {
     actions = ["sts:AssumeRole"]
-    principals  {
-      type = "Service"
-       identifiers = ["ecs-tasks.amazonaws.com"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
     }
   }
 }
@@ -36,9 +38,9 @@ resource "aws_iam_role_policy" "consul_ecs_task" {
 # ecsServiceRole for consul
 
 resource "aws_iam_role" "ecsServiceRole" {
-    name               = "tf-${data.aws_vpc.vpc.tags["Name"]}-consul-ecsServiceRole"
+  name = "tf-${data.aws_vpc.vpc.tags["Name"]}-consul-ecsServiceRole"
 
-    assume_role_policy = <<EOF
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -57,6 +59,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "attach-ecsServiceRole" {
-    role = "${aws_iam_role.ecsServiceRole.name}"
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
+  role       = "${aws_iam_role.ecsServiceRole.name}"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }

@@ -11,6 +11,7 @@ variable "consul_image" {
   description = "Image to use when deploying consul, defaults to the hashicorp consul image"
   default     = "fitnesskeeper/consul:latest"
 }
+
 variable "dns_zone" {
   description = "Zone where the Consul UI alb will be created. This should *not* be consul.example.com"
 }
@@ -19,12 +20,13 @@ variable "ecs_cluster_id" {
   description = "ARN of the ECS ID"
 }
 
-variable "env" { }
+variable "env" {}
 
 variable "join_ec2_tag_key" {
   description = "EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name"
   default     = "Name"
 }
+
 variable "join_ec2_tag" {
   description = "EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples."
 }
@@ -43,30 +45,37 @@ variable "raft_multiplier" {
   description = "An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html"
   default     = "5"
 }
-variable "vpc_id" { }
+
+variable "vpc_id" {}
 
 variable "sha_htpasswd_hash" {
   description = "Entries must be created with htpasswd -s for SHA encryption"
 }
+
 variable "oauth2_proxy_htpasswd_file" {
   description = "Path the htpasswd file"
   default     = "/conf/htpasswd"
 }
+
 variable "oauth2_proxy_provider" {
   description = "OAuth provider"
   default     = "github"
 }
+
 variable "oauth2_proxy_github_org" {
   description = "Github Org"
 }
+
 variable "oauth2_proxy_github_team" {
   description = "list of teams that should have access defaults to empty list (allow all)"
   type        = "list"
   default     = []
 }
+
 variable "oauth2_proxy_client_id" {
   description = "the OAuth Client ID: ie: 123456.apps.googleusercontent.com"
 }
+
 variable "oauth2_proxy_client_secret" {
   description = "the OAuth Client Secret"
 }
