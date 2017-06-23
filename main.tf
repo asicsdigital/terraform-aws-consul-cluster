@@ -30,6 +30,7 @@ data "template_file" "consul" {
     oauth2_proxy_client_id     = "${var.oauth2_proxy_client_id}"
     oauth2_proxy_client_secret = "${var.oauth2_proxy_client_secret}"
     raft_multiplier            = "${var.raft_multiplier}"
+    s3_backup_bucket           = "${var.s3_backup_bucket}"
   }
 }
 

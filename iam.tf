@@ -10,6 +10,19 @@ data "aws_iam_policy_document" "consul_task_policy" {
 
     resources = ["*"]
   }
+  ##
+  statement {
+    actions = [
+      "s3:*",
+    ]
+
+  resources = [
+    "arn:aws:s3:::${var.s3_backup_bucket}",
+    "arn:aws:s3:::${var.s3_backup_bucket}/*"
+  ]
+
+  }
+  ##
 }
 
 data "aws_iam_policy_document" "assume_role_consul_task" {

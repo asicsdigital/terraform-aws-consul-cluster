@@ -31,6 +31,11 @@ variable "join_ec2_tag" {
   description = "EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples."
 }
 
+
+variable "s3_backup_bucket" {
+  description = "S3 Bucket to use to store backups of consul snapshots"
+}
+
 variable "subnets" {
   type        = "list"
   description = "List of subnets used to deploy the Consul alb"
