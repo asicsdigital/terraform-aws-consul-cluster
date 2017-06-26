@@ -76,7 +76,7 @@ resource "aws_ecs_service" "consul" {
   iam_role = "${aws_iam_role.ecsServiceRole.arn}"
 
   depends_on = ["aws_alb_target_group.consul_ui",
-    "aws_alb_listener.consul_http",
+    "aws_alb_listener.consul_https",
     "aws_alb.consul",
     "aws_iam_role.ecsServiceRole",
   ]

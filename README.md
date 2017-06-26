@@ -73,6 +73,7 @@ Authors
 =======
 
 [Tim Hartmann](https://github.com/tfhartmann)
+[Steve Huff](https://github.com/hakamadare)
 
 License
 =======
