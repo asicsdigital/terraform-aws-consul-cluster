@@ -48,17 +48,6 @@ resource "aws_alb_target_group" "consul_ui" {
 }
 
 # Create a new alb listener
-resource "aws_alb_listener" "consul_http" {
-  load_balancer_arn = "${aws_alb.consul.arn}"
-  port              = "80"
-  protocol          = "HTTP"
-
-  default_action {
-    target_group_arn = "${aws_alb_target_group.consul_ui.arn}"
-    type             = "forward"
-  }
-}
-
 resource "aws_alb_listener" "consul_https" {
   load_balancer_arn = "${aws_alb.consul.arn}"
   port              = "443"
