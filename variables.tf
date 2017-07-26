@@ -22,6 +22,11 @@ variable "ecs_cluster_id" {
 
 variable "env" {}
 
+variable "enable_script_checks" {
+  description = "This controls whether health checks that execute scripts are enabled on this agent, and defaults to false"
+  default     = false
+}
+
 variable "join_ec2_tag_key" {
   description = "EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name"
   default     = "Name"
@@ -30,7 +35,6 @@ variable "join_ec2_tag_key" {
 variable "join_ec2_tag" {
   description = "EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples."
 }
-
 
 variable "s3_backup_bucket" {
   description = "S3 Bucket to use to store backups of consul snapshots"

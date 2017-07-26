@@ -16,6 +16,8 @@ data "template_file" "consul" {
   vars {
     datacenter                 = "${data.aws_vpc.vpc.tags["Name"]}"
     env                        = "${var.env}"
+    enable_script_checks       = "${var.enable_script_checks}"
+    enable_script_checks       = "${var.enable_script_checks ? "true" : "false"}"
     image                      = "${var.consul_image}"
     join_ec2_tag_key           = "${var.join_ec2_tag_key}"
     join_ec2_tag               = "${var.join_ec2_tag}"
