@@ -5,6 +5,7 @@ A terraform module providing an opinionated Consul cluster built on an ECS clust
 
 This module is designed to be used in conjunction with the [Runkeeper ECS Module](https://github.com/FitnessKeeper/terraform-ecs)
 
+This module supports consul 0.9.1 or later. 
 
 This module
 
