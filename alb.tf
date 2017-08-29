@@ -2,7 +2,7 @@
 
 resource "aws_alb" "consul" {
   #name            = "tf-consul-${data.aws_vpc.vpc.tags["Name"]}"
-  name     = "${replace(format("%.32s", replace("tf-c-${data.aws_vpc.vpc.tags["Name"]}", "_", "-")), "/\\s/", "-")}"
+  name            = "${replace(format("%.32s", replace("tf-c-${data.aws_vpc.vpc.tags["Name"]}", "_", "-")), "/\\s/", "-")}"
   security_groups = ["${aws_security_group.alb-web-sg.id}"]
   internal        = false
   subnets         = ["${var.subnets}"]
