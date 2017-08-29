@@ -1,7 +1,7 @@
 # Create a new load balancer
 
 resource "aws_alb" "consul" {
-  name            = "tf-consul-${data.aws_vpc.vpc.tags["Name"]}"
+  name            = "${replace(format("%.32s", replace("tf-c-${data.aws_vpc.vpc.tags["Name"]}", "_", "-")), "/\\s/", "-")}"
   security_groups = ["${aws_security_group.alb-web-sg.id}"]
   internal        = false
   subnets         = ["${var.subnets}"]
@@ -32,7 +32,7 @@ resource "aws_route53_record" "consul" {
 
 # Create a new target group
 resource "aws_alb_target_group" "consul_ui" {
-  name     = "tf-consul-ui-${data.aws_vpc.vpc.tags["Name"]}"
+  name     = "${replace(format("%.32s", replace("tf-c_ui-${data.aws_vpc.vpc.tags["Name"]}", "_", "-")), "/\\s/", "-")}"
   port     = 4180
   protocol = "HTTP"
   vpc_id   = "${data.aws_vpc.vpc.id}"

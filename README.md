@@ -3,9 +3,11 @@ Consul Cluster terraform module
 
 A terraform module providing an opinionated Consul cluster built on an ECS cluster in AWS.
 
+[![CircleCI](https://circleci.com/gh/FitnessKeeper/terraform-consul-cluster.svg?style=svg)](https://circleci.com/gh/FitnessKeeper/terraform-consul-cluster)
+
 This module is designed to be used in conjunction with the [Runkeeper ECS Module](https://github.com/FitnessKeeper/terraform-ecs)
 
-This module supports consul 0.9.1 or later. 
+This module supports consul 0.9.1 or later.
 
 This module
 
