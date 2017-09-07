@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "assume_role_consul_task" {
 
 resource "aws_iam_role" "consul_task" {
   name               = "tf-${data.aws_vpc.vpc.tags["Name"]}-consul-ecsTaskRole"
-  path               = "/"
+  path               = "${var.iam_path}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role_consul_task.json}"
 }
 
@@ -53,6 +53,7 @@ resource "aws_iam_role_policy" "consul_ecs_task" {
 
 resource "aws_iam_role" "ecsServiceRole" {
   name = "tf-${data.aws_vpc.vpc.tags["Name"]}-consul-ecsServiceRole"
+  path = "${var.iam_path}"
 
   assume_role_policy = <<EOF
 {

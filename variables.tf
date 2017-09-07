@@ -36,6 +36,11 @@ variable "join_ec2_tag" {
   description = "EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples."
 }
 
+variable "iam_path" {
+  default     = "/"
+  description = "IAM path, this is useful when creating resources with the same name across multiple regions. Defaults to /"
+}
+
 variable "s3_backup_bucket" {
   description = "S3 Bucket to use to store backups of consul snapshots"
 }
