@@ -27,6 +27,11 @@ variable "enable_script_checks" {
   default     = false
 }
 
+variable "hostname" {
+  description = "DNS Hostname for the bastion host. Defaults to ${VPC NAME}.${dns_zone} if hostname is not set"
+  default     = ""
+}
+
 variable "join_ec2_tag_key" {
   description = "EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name"
   default     = "Name"

@@ -20,7 +20,7 @@ resource "aws_alb" "consul" {
 # DNS Alias for the LB
 resource "aws_route53_record" "consul" {
   zone_id = "${data.aws_route53_zone.zone.zone_id}"
-  name    = "${data.aws_vpc.vpc.tags["Name"]}.${data.aws_route53_zone.zone.name}"
+  name    = "${coalesce(var.hostname, data.aws_vpc.vpc.tags["Name"])}.${data.aws_route53_zone.zone.name}"
   type    = "A"
 
   alias {

@@ -37,6 +37,7 @@ This module
 
 - `cluster_size`  - Consul cluster size. This must be greater the 3, defaults to 3
 - `enable_script_checks` - description = This controls whether health checks that execute scripts are enabled on this agent, and defaults to false
+- `hostname` - DNS Hostname for the bastion host. Defaults to ${VPC NAME}.${dns_zone} if hostname is not set, if hostname is set, DNS will be configured to ${hostname}.${dns_zone}
 - `oauth2_proxy_htpasswd_file` - Path the htpasswd file defaults to /conf/htpasswd
 - `join_ec2_tag_key` - EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name
 - `iam_path` - IAM path, this is useful when creating resources with the same name across multiple regions. Defaults to /
