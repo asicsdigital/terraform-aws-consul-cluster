@@ -21,8 +21,9 @@ variable "dns_zone" {
   description = "Zone where the Consul UI alb will be created. This should *not* be consul.example.com"
 }
 
-variable "ecs_cluster_id" {
-  description = "ARN of the ECS ID"
+variable "ecs_cluster_ids" {
+  type        = "list"
+  description = "List of ARNs of the ECS Cluster IDs"
 }
 
 variable "env" {}

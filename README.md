@@ -20,7 +20,7 @@ This module
 #### Required
 - `alb_log_bucket` - s3 bucket to send ALB Logs
 - `dns_zone` - Zone where the Consul UI alb will be created. This should *not* be consul.tld.com
-- `ecs_cluster_id` - ARN of the ECS ID
+- `ecs_cluster_ids` - List of ARNs of the ECS Cluster IDs List must contain 1 entry, and can have up to two elements. Currently any elements other then the first two are ignored. 
 - `env` - env to deploy into, should typically dev/staging/prod
 - `join_ec2_tag` - EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples.
 - `subnets` - List of subnets used to deploy the Consul alb
