@@ -14,7 +14,7 @@ data "template_file" "consul" {
   template = "${file("${path.module}/files/consul.json")}"
 
   vars {
-    datacenter                 = "${data.aws_vpc.vpc.tags["Name"]}"
+    datacenter                 = "${coalesce(var.datacenter_name ,data.aws_vpc.vpc.tags["Name"])}"
     env                        = "${var.env}"
     enable_script_checks       = "${var.enable_script_checks}"
     enable_script_checks       = "${var.enable_script_checks ? "true" : "false"}"
