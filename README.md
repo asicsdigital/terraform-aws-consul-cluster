@@ -3,8 +3,6 @@ Consul Cluster terraform module
 
 A terraform module providing an opinionated Consul cluster built on an ECS cluster in AWS.
 
-[![CircleCI](https://circleci.com/gh/FitnessKeeper/terraform-consul-cluster.svg?style=svg)](https://circleci.com/gh/FitnessKeeper/terraform-consul-cluster)
-
 This module is designed to be used in conjunction with the [Runkeeper ECS Module](https://github.com/FitnessKeeper/terraform-ecs)
 
 This module supports consul 0.9.1 or later.
@@ -22,7 +20,7 @@ This module
 #### Required
 - `alb_log_bucket` - s3 bucket to send ALB Logs
 - `dns_zone` - Zone where the Consul UI alb will be created. This should *not* be consul.tld.com
-- `ecs_cluster_id` - ARN of the ECS ID
+- `ecs_cluster_ids` - List of ARNs of the ECS Cluster IDs List must contain 1 entry, and can have up to two elements. Currently any elements other then the first two are ignored. 
 - `env` - env to deploy into, should typically dev/staging/prod
 - `join_ec2_tag` - EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples.
 - `subnets` - List of subnets used to deploy the Consul alb
@@ -36,11 +34,10 @@ This module
 #### Optional
 
 - `cluster_size`  - Consul cluster size. This must be greater the 3, defaults to 3
+- `datacenter_name` - Optional overide for datacenter nam
 - `enable_script_checks` - description = This controls whether health checks that execute scripts are enabled on this agent, and defaults to false
-- `hostname` - DNS Hostname for the bastion host. Defaults to ${VPC NAME}.${dns_zone} if hostname is not set, if hostname is set, DNS will be configured to ${hostname}.${dns_zone}
 - `oauth2_proxy_htpasswd_file` - Path the htpasswd file defaults to /conf/htpasswd
 - `join_ec2_tag_key` - EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name
-- `iam_path` - IAM path, this is useful when creating resources with the same name across multiple regions. Defaults to /
 - `raft_multiplier" - An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html defaults to 5
 - `region` - AWS Region - defaults to us-east-1
 - `oauth2_proxy_provider` - OAuth provider defaults to github

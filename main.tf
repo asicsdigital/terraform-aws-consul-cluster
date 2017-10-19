@@ -14,7 +14,7 @@ data "template_file" "consul" {
   template = "${file("${path.module}/files/consul.json")}"
 
   vars {
-    datacenter                 = "${data.aws_vpc.vpc.tags["Name"]}"
+    datacenter                 = "${coalesce(var.datacenter_name ,data.aws_vpc.vpc.tags["Name"])}"
     env                        = "${var.env}"
     enable_script_checks       = "${var.enable_script_checks}"
     enable_script_checks       = "${var.enable_script_checks ? "true" : "false"}"
@@ -59,11 +59,13 @@ resource "aws_cloudwatch_log_group" "consul" {
   }
 }
 
+# start service
 resource "aws_ecs_service" "consul" {
+  count           = "${length(var.ecs_cluster_ids)  == 1 ? 1 : 0}"
   name            = "consul-${var.env}"
-  cluster         = "${var.ecs_cluster_id}"
+  cluster         = "${var.ecs_cluster_ids[0]}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
-  desired_count   = "${var.cluster_size * 2}"               # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+  desired_count   = "${var.cluster_size * 2}"                      # This is not awesome, it lets new AS groups get added to the cluster before destruction.
 
   placement_constraints {
     type = "distinctInstance"
@@ -84,6 +86,59 @@ resource "aws_ecs_service" "consul" {
   ]
 }
 
+resource "aws_ecs_service" "consul_primary" {
+  count           = "${length(var.ecs_cluster_ids)  > 1 ? 1 : 0}"
+  name            = "consul-${var.env}-primary"
+  cluster         = "${var.ecs_cluster_ids[0]}"
+  task_definition = "${aws_ecs_task_definition.consul.arn}"
+  desired_count   = "${var.cluster_size * 2 }"                    # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+
+  placement_constraints {
+    type = "distinctInstance"
+  }
+
+  load_balancer {
+    target_group_arn = "${aws_alb_target_group.consul_ui.arn}"
+    container_name   = "consul-ui-${var.env}"
+    container_port   = 4180
+  }
+
+  iam_role = "${aws_iam_role.ecsServiceRole.arn}"
+
+  depends_on = ["aws_alb_target_group.consul_ui",
+    "aws_alb_listener.consul_https",
+    "aws_alb.consul",
+    "aws_iam_role.ecsServiceRole",
+  ]
+}
+
+resource "aws_ecs_service" "consul_secondary" {
+  count           = "${length(var.ecs_cluster_ids)  > 1 ? 1 : 0}"
+  name            = "consul-${var.env}-secondary"
+  cluster         = "${var.ecs_cluster_ids[1]}"
+  task_definition = "${aws_ecs_task_definition.consul.arn}"
+  desired_count   = "${var.cluster_size * 2 }"                    # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+
+  placement_constraints {
+    type = "distinctInstance"
+  }
+
+  load_balancer {
+    target_group_arn = "${aws_alb_target_group.consul_ui.arn}"
+    container_name   = "consul-ui-${var.env}"
+    container_port   = 4180
+  }
+
+  iam_role = "${aws_iam_role.ecsServiceRole.arn}"
+
+  depends_on = ["aws_alb_target_group.consul_ui",
+    "aws_alb_listener.consul_https",
+    "aws_alb.consul",
+    "aws_iam_role.ecsServiceRole",
+  ]
+}
+
+# end service
 # Security Groups
 resource "aws_security_group" "alb-web-sg" {
   name        = "tf-${data.aws_vpc.vpc.tags["Name"]}-consul-uiSecurityGroup"
