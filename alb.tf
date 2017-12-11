@@ -37,7 +37,8 @@ resource "aws_alb_target_group" "consul_ui" {
   vpc_id   = "${data.aws_vpc.vpc.id}"
 
   health_check {
-    path = "/ping"
+    path    = "/ping"
+    matcher = "200"
   }
 
   stickiness {
