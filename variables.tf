@@ -105,7 +105,7 @@ variable "registrator_memory_reservation" {
 # The below var is pretty much useless until we stop doing the multiple of two thing with number of desired tasks
 variable "service_minimum_healthy_percent" {
   description = "The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment (default 90)"
-  default = "100"
+  default     = "100"
 }
 
 variable "vpc_id" {}
