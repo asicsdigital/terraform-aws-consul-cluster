@@ -15,10 +15,16 @@ data "template_file" "consul" {
 
   vars {
     datacenter                 = "${coalesce(var.datacenter_name ,data.aws_vpc.vpc.tags["Name"])}"
+    definitions                = "${join(" ", var.definitions)}"
     env                        = "${var.env}"
     enable_script_checks       = "${var.enable_script_checks}"
     enable_script_checks       = "${var.enable_script_checks ? "true" : "false"}"
     image                      = "${var.consul_image}"
+    registrator_image          = "${var.registrator_image}"
+    healthcheck_image          = "${var.healthcheck_image}"
+    consul_memory_reservation      = "${var.consul_memory_reservation}"
+    registrator_memory_reservation = "${var.registrator_memory_reservation}"
+    healthcheck_memory_reservation = "${var.healthcheck_memory_reservation}"
     join_ec2_tag_key           = "${var.join_ec2_tag_key}"
     join_ec2_tag               = "${var.join_ec2_tag}"
     awslogs_group              = "consul-${var.env}"
@@ -48,6 +54,11 @@ resource "aws_ecs_task_definition" "consul" {
     name      = "docker-sock"
     host_path = "/var/run/docker.sock"
   }
+
+  volume {
+    name      = "consul-check-definitions"
+    host_path = "/consul_check_definitions"
+  }
 }
 
 resource "aws_cloudwatch_log_group" "consul" {
@@ -66,6 +77,7 @@ resource "aws_ecs_service" "consul" {
   cluster         = "${var.ecs_cluster_ids[0]}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
   desired_count   = "${var.cluster_size * 2}"                      # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+  deployment_minimum_healthy_percent = "${var.service_minimum_healthy_percent}"
 
   placement_constraints {
     type = "distinctInstance"
@@ -92,6 +104,7 @@ resource "aws_ecs_service" "consul_primary" {
   cluster         = "${var.ecs_cluster_ids[0]}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
   desired_count   = "${var.cluster_size * 2 }"                    # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+  deployment_minimum_healthy_percent = "${var.service_minimum_healthy_percent}"
 
   placement_constraints {
     type = "distinctInstance"
@@ -118,6 +131,7 @@ resource "aws_ecs_service" "consul_secondary" {
   cluster         = "${var.ecs_cluster_ids[1]}"
   task_definition = "${aws_ecs_task_definition.consul.arn}"
   desired_count   = "${var.cluster_size * 2 }"                    # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+  deployment_minimum_healthy_percent = "${var.service_minimum_healthy_percent}"
 
   placement_constraints {
     type = "distinctInstance"
