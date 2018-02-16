@@ -15,12 +15,14 @@ This module
 - Deploys registrator
 - deploys oauth2_proxy containers to proxy oauth requests through to the consul ui
 
+This module supports two modes. If you pass a single ECS cluster ID into the `ecs_cluster_ids` the module deploys a single service and deploys to it called "consul-$env". If you pass two ID's into the array, two services will be created, consul-$env-primary and consul-$env-secondary. This allows you to spread consul across two separate ECS clusters, and two separate autoscaling groups, allowing you to redeploy ECS instances without effecting the stability of the Consul cluster.   
+
 
 ----------------------
 #### Required
 - `alb_log_bucket` - s3 bucket to send ALB Logs
 - `dns_zone` - Zone where the Consul UI alb will be created. This should *not* be consul.tld.com
-- `ecs_cluster_ids` - List of ARNs of the ECS Cluster IDs List must contain 1 entry, and can have up to two elements. Currently any elements other then the first two are ignored. 
+- `ecs_cluster_ids` - List of ARNs of the ECS Cluster IDs List must contain 1 entry, and can have up to two elements. Currently any elements other then the first two are ignored.
 - `env` - env to deploy into, should typically dev/staging/prod
 - `join_ec2_tag` - EC2 Tags which consul will search for in order to generate a list of IP's to join. See https://github.com/hashicorp/consul-ec2-auto-join-example for more examples.
 - `subnets` - List of subnets used to deploy the Consul alb
@@ -33,15 +35,23 @@ This module
 
 #### Optional
 
+- `consul_image` - Image to use when deploying consul
+- `consul_memory_reservation` - The soft limit (in MiB) of memory to reserve for the container, (defaults 32)
 - `cluster_size`  - Consul cluster size. This must be greater the 3, defaults to 3
 - `datacenter_name` - Optional overide for datacenter nam
 - `enable_script_checks` - description = This controls whether health checks that execute scripts are enabled on this agent, and defaults to false
+- `definitions` - List of Consul Service and Health Check Definitions
+- `healthcheck_image` - Image to use when deploying health check agent, defaults to fitnesskeeper/consul-healthchecks:latest image
+- `healthcheck_memory_reservation` - The soft limit (in MiB) of memory to reserve for the container, defaults 32
 - `oauth2_proxy_htpasswd_file` - Path the htpasswd file defaults to /conf/htpasswd
 - `join_ec2_tag_key` - EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name
 - `raft_multiplier" - An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html defaults to 5
 - `region` - AWS Region - defaults to us-east-1
+- `registrator_image` - Image to use when deploying registrator agent, defaults to the gliderlabs registrator:latest image
+- `registrator_memory_reservation` The soft limit (in MiB) of memory to reserve for the container, defaults 32
 - `oauth2_proxy_provider` - OAuth provider defaults to github
 - `oauth2_proxy_github_team` - list of teams that should have access defaults to empty list (allow all)
+- `service_minimum_healthy_percent` - The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment
 
 Usage
 -----

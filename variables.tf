@@ -12,9 +12,20 @@ variable "consul_image" {
   default     = "fitnesskeeper/consul:latest"
 }
 
+variable "consul_memory_reservation" {
+  description = "The soft limit (in MiB) of memory to reserve for the container, defaults 32"
+  default     = "32"
+}
+
 variable "datacenter_name" {
   description = "Optional overide for datacenter name"
   default     = ""
+}
+
+variable "definitions" {
+  type        = "list"
+  description = "List of Consul Service and Health Check Definitions"
+  default     = []
 }
 
 variable "dns_zone" {
@@ -36,6 +47,16 @@ variable "enable_script_checks" {
 variable "hostname" {
   description = "DNS Hostname for the bastion host. Defaults to ${VPC NAME}.${dns_zone} if hostname is not set"
   default     = ""
+}
+
+variable "healthcheck_image" {
+  default     = "fitnesskeeper/consul-healthchecks"
+  description = "Image to use when deploying health check agent, defaults to fitnesskeeper/consul-healthchecks:latest image"
+}
+
+variable "healthcheck_memory_reservation" {
+  description = "The soft limit (in MiB) of memory to reserve for the container, defaults 32"
+  default     = "32"
 }
 
 variable "join_ec2_tag_key" {
@@ -61,14 +82,30 @@ variable "subnets" {
   description = "List of subnets used to deploy the Consul alb"
 }
 
+variable "raft_multiplier" {
+  description = "An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html"
+  default     = "5"
+}
+
 variable "region" {
   default     = "us-east-1"
   description = "AWS Region, defaults to us-east-1"
 }
 
-variable "raft_multiplier" {
-  description = "An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html"
-  default     = "5"
+variable "registrator_image" {
+  default     = "gliderlabs/registrator:latest"
+  description = "Image to use when deploying registrator agent, defaults to the gliderlabs registrator:latest image"
+}
+
+variable "registrator_memory_reservation" {
+  description = "The soft limit (in MiB) of memory to reserve for the container, defaults 32"
+  default     = "32"
+}
+
+# The below var is pretty much useless until we stop doing the multiple of two thing with number of desired tasks
+variable "service_minimum_healthy_percent" {
+  description = "The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment (default 90)"
+  default     = "100"
 }
 
 variable "vpc_id" {}

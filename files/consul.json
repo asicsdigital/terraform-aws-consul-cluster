@@ -2,7 +2,9 @@
         {
             "name": "consul_cluster-${env}",
             "image": "${image}",
-            "memoryReservation": 512,
+            "essential": true,
+            "cpu": 0,
+            "memoryReservation": ${consul_memory_reservation},
             "environment": [
                 {
                     "name": "CONSUL_LOCAL_CONFIG",
@@ -22,7 +24,15 @@
                 }
             ],
             "command": [
-              "agent", "-server", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-dns-port=53"
+              "agent", "-server", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-dns-port=53", "-config-dir=/consul_check_definitions"
+            ],
+            "volumesFrom": [
+              {
+                "sourceContainer": "consul-healthchecks-${env}"
+              }
+            ],
+            "portMappings": [
+
             ],
             "logConfiguration": {
               "logDriver": "awslogs",
@@ -34,17 +44,69 @@
               }
         },
         {
+            "name": "consul-healthchecks-${env}",
+            "image": "${healthcheck_image}",
+            "essential": true,
+            "cpu": 0,
+            "memoryReservation": ${healthcheck_memory_reservation},
+            "environment": [
+                {
+                    "name": "CHECKS",
+                    "value": "${definitions}"
+                },
+                {
+                    "name": "S3_BUCKET",
+                    "value": "${s3_backup_bucket}"
+                }
+            ],
+            "mountPoints": [
+              {
+                "sourceVolume": "docker-sock",
+                "containerPath": "/var/run/docker.sock"
+              },
+              {
+                "sourceVolume": "consul-check-definitions",
+                "containerPath": "/consul_check_definitions"
+              }
+            ],
+            "portMappings": [
+
+            ],
+            "volumesFrom": [
+
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "${awslogs_group}",
+                  "awslogs-region": "${awslogs_region}",
+                  "awslogs-stream-prefix": "${awslogs_stream_prefix}"
+                }
+              }
+        },
+        {
             "name": "registrator-${env}",
-            "image": "gliderlabs/registrator",
-            "memoryReservation": 256,
+            "image": "${registrator_image}",
+            "essential": true,
+            "cpu": 0,
+            "memoryReservation": ${registrator_memory_reservation},
+            "environment": [
+
+            ],
             "command": [
-              "-retry-attempts=10", "-retry-interval=1000", "consul://localhost:8500"
+              "-retry-attempts=15", "-retry-interval=1000", "consul://localhost:8500"
             ],
             "mountPoints": [
               {
                 "sourceVolume": "docker-sock",
                 "containerPath": "/tmp/docker.sock"
               }
+            ],
+            "portMappings": [
+
+            ],
+            "volumesFrom": [
+
             ],
             "logConfiguration": {
               "logDriver": "awslogs",
@@ -58,11 +120,21 @@
         {
             "name": "consul-ui-${env}",
             "image": "fitnesskeeper/oauth2_proxy:add-basic-auth",
+            "essential": true,
+            "cpu": 0,
             "memoryReservation": 128,
             "portMappings": [
                 {
-                    "containerPort": 4180
+                    "containerPort": 4180,
+                    "hostPort": 4180,
+                    "protocol": "tcp"
                 }
+            ],
+            "mountPoints": [
+
+            ],
+            "volumesFrom": [
+
             ],
             "environment": [
                 {
