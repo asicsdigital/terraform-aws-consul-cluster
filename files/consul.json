@@ -28,7 +28,7 @@
             ],
             "volumesFrom": [
               {
-                "sourceContainer": "consul-healthchecks-${env}"
+                "sourceContainer": "consul-sidecar-${env}"
               }
             ],
             "portMappings": [
@@ -44,11 +44,11 @@
               }
         },
         {
-            "name": "consul-healthchecks-${env}",
-            "image": "${healthcheck_image}",
+            "name": "consul-sidecar-${env}",
+            "image": "${sidecar_image}",
             "essential": true,
             "cpu": 0,
-            "memoryReservation": ${healthcheck_memory_reservation},
+            "memoryReservation": ${sidecar_memory_reservation},
             "environment": [
                 {
                     "name": "CHECKS",
