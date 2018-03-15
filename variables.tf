@@ -3,7 +3,7 @@ variable "alb_log_bucket" {
 }
 
 variable "cloudwatch_log_retention" {
-  default = "30"
+  default     = "30"
   description = "Specifies the number of days you want to retain log events in the specified log group. (defaults to 30)"
 }
 

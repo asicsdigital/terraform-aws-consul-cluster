@@ -77,7 +77,7 @@ resource "aws_ecs_service" "consul" {
   name                               = "consul-${var.env}"
   cluster                            = "${var.ecs_cluster_ids[0]}"
   task_definition                    = "${aws_ecs_task_definition.consul.arn}"
-  desired_count                      = "${var.cluster_size}"                      # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+  desired_count                      = "${var.cluster_size}"
   deployment_minimum_healthy_percent = "${var.service_minimum_healthy_percent}"
 
   placement_constraints {
@@ -104,7 +104,7 @@ resource "aws_ecs_service" "consul_primary" {
   name                               = "consul-${var.env}-primary"
   cluster                            = "${var.ecs_cluster_ids[0]}"
   task_definition                    = "${aws_ecs_task_definition.consul.arn}"
-  desired_count                      = "${var.cluster_size}"                    # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+  desired_count                      = "${var.cluster_size}"
   deployment_minimum_healthy_percent = "${var.service_minimum_healthy_percent}"
 
   placement_constraints {
@@ -131,7 +131,7 @@ resource "aws_ecs_service" "consul_secondary" {
   name                               = "consul-${var.env}-secondary"
   cluster                            = "${var.ecs_cluster_ids[1]}"
   task_definition                    = "${aws_ecs_task_definition.consul.arn}"
-  desired_count                      = "${var.cluster_size}"                    # This is not awesome, it lets new AS groups get added to the cluster before destruction.
+  desired_count                      = "${var.cluster_size}"
   deployment_minimum_healthy_percent = "${var.service_minimum_healthy_percent}"
 
   placement_constraints {
