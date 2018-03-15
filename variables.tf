@@ -2,6 +2,11 @@ variable "alb_log_bucket" {
   description = "s3 bucket to send ALB Logs"
 }
 
+variable "cloudwatch_log_retention" {
+  default = "30"
+  description = "Specifies the number of days you want to retain log events in the specified log group. (defaults to 30)"
+}
+
 variable "cluster_size" {
   default     = "3"
   description = "Consul cluster size. This must be greater the 3"
@@ -104,8 +109,8 @@ variable "registrator_memory_reservation" {
 
 # The below var is pretty much useless until we stop doing the multiple of two thing with number of desired tasks
 variable "service_minimum_healthy_percent" {
-  description = "The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment (default 90)"
-  default     = "100"
+  description = "The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment (default 66)"
+  default     = "66"
 }
 
 variable "vpc_id" {}

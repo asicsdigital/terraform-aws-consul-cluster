@@ -8,7 +8,7 @@
             "environment": [
                 {
                     "name": "CONSUL_LOCAL_CONFIG",
-                    "value": "{ \"retry_join\": [\"provider=aws tag_key=${join_ec2_tag_key} tag_value=${join_ec2_tag}\"], \"raft_protocol\": 3, \"skip_leave_on_interrupt\": true, \"enable_script_checks\": ${enable_script_checks}, \"datacenter\":\"${datacenter}\", \"performance\": { \"raft_multiplier\": ${raft_multiplier} }, \"service\": { \"name\": \"InstanceStatus\", \"checks\": [{ \"script\": \"/usr/local/bin/instance-status.sh\", \"interval\": \"30s\" }]}, \"watches\": [ { \"type\": \"service\", \"service\": \"InstanceStatus\", \"handler\": \"/usr/local/bin/instance-status-handler.sh\" } ]}"
+                    "value": "{ \"retry_join\": [\"provider=aws tag_key=${join_ec2_tag_key} tag_value=${join_ec2_tag}\"], \"raft_protocol\": 3, \"skip_leave_on_interrupt\": true, \"enable_script_checks\": ${enable_script_checks}, \"datacenter\":\"${datacenter}\", \"performance\": { \"raft_multiplier\": ${raft_multiplier} }}"
                 },
                 {
                     "name": "CONSUL_BIND_INTERFACE",

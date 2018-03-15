@@ -38,6 +38,7 @@ This module supports two modes. If you pass a single ECS cluster ID into the `ec
 - `consul_image` - Image to use when deploying consul
 - `consul_memory_reservation` - The soft limit (in MiB) of memory to reserve for the container, (defaults 32)
 - `cluster_size`  - Consul cluster size. This must be greater the 3, defaults to 3
+- `cloudwatch_log_retention` - Specifies the number of days you want to retain log events in the specified log group. (defaults to 30)
 - `datacenter_name` - Optional overide for datacenter nam
 - `enable_script_checks` - description = This controls whether health checks that execute scripts are enabled on this agent, and defaults to false
 - `definitions` - List of Consul Service and Health Check Definitions
