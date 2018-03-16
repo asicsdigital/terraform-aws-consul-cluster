@@ -2,6 +2,11 @@ variable "alb_log_bucket" {
   description = "s3 bucket to send ALB Logs"
 }
 
+variable "cloudwatch_log_retention" {
+  default     = "30"
+  description = "Specifies the number of days you want to retain log events in the specified log group. (defaults to 30)"
+}
+
 variable "cluster_size" {
   default     = "3"
   description = "Consul cluster size. This must be greater the 3"
@@ -25,7 +30,7 @@ variable "datacenter_name" {
 variable "definitions" {
   type        = "list"
   description = "List of Consul Service and Health Check Definitions"
-  default     = []
+  default     = ["ecs-cluster"]
 }
 
 variable "dns_zone" {
@@ -49,12 +54,12 @@ variable "hostname" {
   default     = ""
 }
 
-variable "healthcheck_image" {
-  default     = "fitnesskeeper/consul-healthchecks"
-  description = "Image to use when deploying health check agent, defaults to fitnesskeeper/consul-healthchecks:latest image"
+variable "sidecar_image" {
+  default     = "fitnesskeeper/consul-sidecar"
+  description = "Image to use when deploying health check agent, defaults to fitnesskeeper/consul-sidecar:latest image"
 }
 
-variable "healthcheck_memory_reservation" {
+variable "sidecar_memory_reservation" {
   description = "The soft limit (in MiB) of memory to reserve for the container, defaults 32"
   default     = "32"
 }
@@ -104,8 +109,8 @@ variable "registrator_memory_reservation" {
 
 # The below var is pretty much useless until we stop doing the multiple of two thing with number of desired tasks
 variable "service_minimum_healthy_percent" {
-  description = "The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment (default 90)"
-  default     = "100"
+  description = "The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment (default 66)"
+  default     = "66"
 }
 
 variable "vpc_id" {}

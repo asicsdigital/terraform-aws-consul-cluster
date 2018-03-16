@@ -6,6 +6,10 @@ data "aws_iam_policy_document" "consul_task_policy" {
       "ec2:DescribeAddresses",
       "ec2:DescribeInstances",
       "ec2:DescribeTags",
+      "cloudwatch:PutMetricData",
+      "ecs:DescribeClusters",
+      "ecs:UpdateContainerInstancesState",
+      "ecs:DescribeContainerInstances",
     ]
 
     resources = ["*"]
