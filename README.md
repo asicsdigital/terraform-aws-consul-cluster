@@ -41,7 +41,7 @@ This module supports two modes. If you pass a single ECS cluster ID into the `ec
 - `cloudwatch_log_retention` - Specifies the number of days you want to retain log events in the specified log group. (defaults to 30)
 - `datacenter_name` - Optional overide for datacenter nam
 - `enable_script_checks` - description = This controls whether health checks that execute scripts are enabled on this agent, and defaults to false
-- `definitions` - List of Consul Service and Health Check Definitions
+- `definitions` - List of Consul Service and Health Check Definitions (defaults to "ecs-cluster")
 - `sidecar_image` - Image to use when deploying health check agent, defaults to fitnesskeeper/consul-sidecar:latest image
 - `sidecar_memory_reservation` - The soft limit (in MiB) of memory to reserve for the container, defaults 32
 - `oauth2_proxy_htpasswd_file` - Path the htpasswd file defaults to /conf/htpasswd

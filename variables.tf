@@ -30,7 +30,7 @@ variable "datacenter_name" {
 variable "definitions" {
   type        = "list"
   description = "List of Consul Service and Health Check Definitions"
-  default     = []
+  default     = ["ecs-cluster"]
 }
 
 variable "dns_zone" {
