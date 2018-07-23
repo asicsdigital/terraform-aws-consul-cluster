@@ -108,8 +108,8 @@ variable "registrator_memory_reservation" {
 }
 
 variable "resolvable_image" {
-  default     = "gliderlabs/resolvable:latest"
-  description = "Image to use when deploying resolvable agent, defaults to the gliderlabs resolvable:latest image"
+  default     = "gliderlabs/resolvable:master"
+  description = "Image to use when deploying resolvable agent, defaults to the gliderlabs resolvable:master image"
 }
 
 variable "resolvable_memory_reservation" {
