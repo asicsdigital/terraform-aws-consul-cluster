@@ -59,6 +59,11 @@ resource "aws_ecs_task_definition" "consul" {
     name      = "consul-check-definitions"
     host_path = "/consul_check_definitions"
   }
+
+  volume {
+    name      = "resolv-conf"
+    host_path = "/etc/resolv.conf"
+  }
 }
 
 resource "aws_cloudwatch_log_group" "consul" {
