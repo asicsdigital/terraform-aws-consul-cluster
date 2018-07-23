@@ -21,9 +21,11 @@ data "template_file" "consul" {
     enable_script_checks           = "${var.enable_script_checks ? "true" : "false"}"
     image                          = "${var.consul_image}"
     registrator_image              = "${var.registrator_image}"
+    resolvable_image               = "${var.resolvable_image}"
     sidecar_image                  = "${var.sidecar_image}"
     consul_memory_reservation      = "${var.consul_memory_reservation}"
     registrator_memory_reservation = "${var.registrator_memory_reservation}"
+    resolvable_memory_reservation  = "${var.resolvable_memory_reservation}"
     sidecar_memory_reservation     = "${var.sidecar_memory_reservation}"
     join_ec2_tag_key               = "${var.join_ec2_tag_key}"
     join_ec2_tag                   = "${var.join_ec2_tag}"
@@ -58,6 +60,11 @@ resource "aws_ecs_task_definition" "consul" {
   volume {
     name      = "consul-check-definitions"
     host_path = "/consul_check_definitions"
+  }
+
+  volume {
+    name      = "resolv-conf"
+    host_path = "/etc/resolv.conf"
   }
 }
 

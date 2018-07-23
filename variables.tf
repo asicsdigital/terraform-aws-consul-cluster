@@ -107,6 +107,16 @@ variable "registrator_memory_reservation" {
   default     = "32"
 }
 
+variable "resolvable_image" {
+  default     = "gliderlabs/resolvable:master"
+  description = "Image to use when deploying resolvable agent, defaults to the gliderlabs resolvable:master image"
+}
+
+variable "resolvable_memory_reservation" {
+  description = "The soft limit (in MiB) of memory to reserve for the container, defaults 32"
+  default     = "32"
+}
+
 # The below var is pretty much useless until we stop doing the multiple of two thing with number of desired tasks
 variable "service_minimum_healthy_percent" {
   description = "The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment (default 66)"

@@ -13,6 +13,7 @@ This module
 - searches for a aws_acm_certificate for example.com, if one doesn't exist it should be created outside of this module
 - deploys consul containers on top of an existing ECS cluster
 - Deploys registrator
+- Deploys resolvable and manages the host's `/etc/resolv.conf`
 - deploys oauth2_proxy containers to proxy oauth requests through to the consul ui
 
 This module supports two modes. If you pass a single ECS cluster ID into the `ecs_cluster_ids` the module deploys a single service and deploys to it called "consul-$env". If you pass two ID's into the array, two services will be created, consul-$env-primary and consul-$env-secondary. This allows you to spread consul across two separate ECS clusters, and two separate autoscaling groups, allowing you to redeploy ECS instances without effecting the stability of the Consul cluster.   
@@ -50,6 +51,8 @@ This module supports two modes. If you pass a single ECS cluster ID into the `ec
 - `region` - AWS Region - defaults to us-east-1
 - `registrator_image` - Image to use when deploying registrator agent, defaults to the gliderlabs registrator:latest image
 - `registrator_memory_reservation` The soft limit (in MiB) of memory to reserve for the container, defaults 32
+- `resolvable_image` - Image to use when deploying resolvable agent, defaults to the gliderlabs resolvable:latest image
+- `resolvable_memory_reservation` The soft limit (in MiB) of memory to reserve for the container, defaults 32
 - `oauth2_proxy_provider` - OAuth provider defaults to github
 - `oauth2_proxy_github_team` - list of teams that should have access defaults to empty list (allow all)
 - `service_minimum_healthy_percent` - The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment

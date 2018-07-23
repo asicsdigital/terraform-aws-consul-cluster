@@ -21,10 +21,18 @@
                 {
                     "name": "S3_BUCKET",
                     "value": "${s3_backup_bucket}"
+                },
+                {
+                    "name": "DNS_RESOLVES",
+                    "value": "consul"
+                },
+                {
+                    "name": "DNS_PORT",
+                    "value": "6300"
                 }
             ],
             "command": [
-              "agent", "-server", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-dns-port=53", "-config-dir=/consul_check_definitions"
+              "agent", "-server", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-config-dir=/consul_check_definitions"
             ],
             "volumesFrom": [
               {
@@ -100,6 +108,42 @@
               {
                 "sourceVolume": "docker-sock",
                 "containerPath": "/tmp/docker.sock"
+              }
+            ],
+            "portMappings": [
+
+            ],
+            "volumesFrom": [
+
+            ],
+            "logConfiguration": {
+              "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "${awslogs_group}",
+                   "awslogs-region": "${awslogs_region}",
+                   "awslogs-stream-prefix": "${awslogs_stream_prefix}"
+                }
+              }
+        },
+        {
+            "name": "resolvable-${env}",
+            "image": "${resolvable_image}",
+            "essential": true,
+            "cpu": 0,
+            "memoryReservation": ${resolvable_memory_reservation},
+            "environment": [
+
+            ],
+            "command": [
+            ],
+            "mountPoints": [
+              {
+                "sourceVolume": "docker-sock",
+                "containerPath": "/tmp/docker.sock"
+              },
+              {
+                "sourceVolume": "resolv-conf",
+                "containerPath": "/tmp/resolv.conf"
               }
             ],
             "portMappings": [
