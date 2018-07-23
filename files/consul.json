@@ -25,10 +25,14 @@
                 {
                     "name": "DNS_RESOLVES",
                     "value": "consul"
+                },
+                {
+                    "name": "DNS_PORT",
+                    "value": "6300"
                 }
             ],
             "command": [
-              "agent", "-server", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-dns-port=53", "-config-dir=/consul_check_definitions"
+              "agent", "-server", "-bootstrap-expect=3", "-ui", "-client=0.0.0.0", "-config-dir=/consul_check_definitions"
             ],
             "volumesFrom": [
               {
