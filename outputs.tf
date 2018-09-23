@@ -3,5 +3,13 @@ output "datacenter" {
 }
 
 output "public_endpoint" {
-  value = "${aws_route53_record.consul.fqdn}"
+  value = "${aws_alb.consul.dns_name}"
+}
+
+output "custom_public_endpoint" {
+  value = "${local.custom_endpoint}"
+}
+
+output "consul_url" {
+  value = "${local.consul_url}"
 }

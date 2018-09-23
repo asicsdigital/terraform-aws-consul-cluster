@@ -9,7 +9,7 @@ variable "cloudwatch_log_retention" {
 
 variable "cluster_size" {
   default     = "3"
-  description = "Consul cluster size. This must be greater the 3"
+  description = "Consul cluster size. This must be greater than 3"
 }
 
 variable "consul_image" {
@@ -34,7 +34,8 @@ variable "definitions" {
 }
 
 variable "dns_zone" {
-  description = "Zone where the Consul UI alb will be created. This should *not* be consul.example.com"
+  description = "Zone where the Consul UI alb will be created. This should *not* be consul.example.com.  Uses the default AWS domain name if not set."
+  default     = ""
 }
 
 variable "ecs_cluster_ids" {
