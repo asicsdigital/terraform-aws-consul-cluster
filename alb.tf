@@ -20,8 +20,9 @@ resource "aws_alb" "consul" {
   }
 
   access_logs {
-    bucket = "${var.alb_log_bucket}"
-    prefix = "logs/elb/${data.aws_vpc.vpc.tags["Name"]}/consul"
+    bucket  = "${var.alb_log_bucket}"
+    prefix  = "${var.alb_log_prefix}/consul"
+    enabled = true
   }
 }
 

@@ -2,6 +2,11 @@ variable "alb_log_bucket" {
   description = "s3 bucket to send ALB Logs"
 }
 
+variable "alb_log_prefix" {
+  description = "Prefix for S3 bucket. (default is log/elb)."
+  default     = "logs/elb"
+}
+
 variable "cloudwatch_log_retention" {
   default     = "30"
   description = "Specifies the number of days you want to retain log events in the specified log group. (defaults to 30)"
@@ -146,4 +151,9 @@ variable "oauth2_proxy_client_id" {
 
 variable "oauth2_proxy_client_secret" {
   description = "the OAuth Client Secret"
+}
+
+variable "prometheus_retention_time" {
+  default     = "0s"
+  description = "Timing for Prometheus metrics, more info can be found here : https://www.consul.io/docs/agent/options.html#telemetry-prometheus_retention_time"
 }
