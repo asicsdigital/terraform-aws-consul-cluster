@@ -47,6 +47,7 @@ This module supports two modes. If you pass a single ECS cluster ID into the `ec
 - `oauth2_proxy_htpasswd_file` - Path the htpasswd file defaults to /conf/htpasswd
 - `join_ec2_tag_key` - EC2 Tag Key which consul uses to search to generate a list of IP's to Join. Defaults to Name
 - `raft_multiplier" - An integer multiplier used by Consul servers to scale key Raft timing parameters https://www.consul.io/docs/guides/performance.html defaults to 5
+- `leave_on_terminate` - If enabled, when the agent receives a TERM signal, it will send a Leave message to the rest of the cluster and gracefully leave. Defaults to false.
 - `region` - AWS Region - defaults to us-east-1
 - `registrator_image` - Image to use when deploying registrator agent, defaults to the gliderlabs registrator:latest image
 - `registrator_memory_reservation` The soft limit (in MiB) of memory to reserve for the container, defaults 32

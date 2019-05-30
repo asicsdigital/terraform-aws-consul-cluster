@@ -119,6 +119,11 @@ variable "service_minimum_healthy_percent" {
   default     = "66"
 }
 
+variable "leave_on_terminate" {
+  description = "If enabled, when the agent receives a TERM signal, it will send a Leave message to the rest of the cluster and gracefully leave. Defaults to false"
+  default     = false
+}
+
 variable "vpc_id" {}
 
 variable "sha_htpasswd_hash" {
