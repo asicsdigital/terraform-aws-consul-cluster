@@ -41,9 +41,9 @@ resource "aws_route53_record" "consul" {
 
 # Create a new target group
 resource "aws_alb_target_group" "consul_ui" {
-  port     = 4180
-  protocol = "HTTP"
-  vpc_id   = "${data.aws_vpc.vpc.id}"
+  port                 = 4180
+  protocol             = "HTTP"
+  vpc_id               = "${data.aws_vpc.vpc.id}"
   deregistration_delay = "${var.alb_deregistration_delay}"
 
   health_check {
