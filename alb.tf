@@ -44,6 +44,7 @@ resource "aws_alb_target_group" "consul_ui" {
   port     = 4180
   protocol = "HTTP"
   vpc_id   = "${data.aws_vpc.vpc.id}"
+  deregistration_delay = "${var.alb_deregistration_delay}"
 
   health_check {
     path    = "/ping"
