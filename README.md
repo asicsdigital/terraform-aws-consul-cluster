@@ -53,7 +53,7 @@ This module supports two modes. If you pass a single ECS cluster ID into the `ec
 - `oauth2_proxy_provider` - OAuth provider defaults to github
 - `oauth2_proxy_github_team` - list of teams that should have access defaults to empty list (allow all)
 - `service_minimum_healthy_percent` - The minimum healthy percent represents a lower limit on the number of your service's tasks that must remain in the RUNNING state during a deployment
-- `alb_deregistration_delay` - The amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused. The range is 0-3600 seconds. The default value is 300 seconds.
+- `lb_deregistration_delay` - The amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused. The range is 0-3600 seconds. The default value is 300 seconds.
 
 Usage
 -----
