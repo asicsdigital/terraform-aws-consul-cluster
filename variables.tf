@@ -120,7 +120,7 @@ variable "service_minimum_healthy_percent" {
 }
 
 variable "leave_on_terminate" {
-  description = "If enabled, when the agent receives a TERM signal, it will send a Leave message to the rest of the cluster and gracefully leave. Defaults to true"
+  description = "If enabled, when the agent receives a TERM signal, it will send a Leave message to the rest of the cluster and gracefully leave. Defaults to true in this module so that containers will gracefully leave the consul cluster when ECS stops the task."
   default     = true
 }
 
