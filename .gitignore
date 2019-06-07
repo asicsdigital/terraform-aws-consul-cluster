@@ -28,4 +28,5 @@ Session.vim
 # auto-generated tag files
 tags
 
-
+# editors
+.idea
