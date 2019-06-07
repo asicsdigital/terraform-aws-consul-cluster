@@ -4,7 +4,7 @@ variable "alb_log_bucket" {
 
 variable "lb_deregistration_delay" {
   description = "The amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused. The range is 0-3600 seconds. The default value is 300 seconds."
-  default     = 300
+  default     = "300"
 }
 
 variable "cloudwatch_log_retention" {
