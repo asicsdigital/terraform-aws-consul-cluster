@@ -33,7 +33,7 @@ variable "datacenter_name" {
 }
 
 variable "definitions" {
-  type        = "list"
+  type        = list(string)
   description = "List of Consul Service and Health Check Definitions"
   default     = ["ecs-cluster"]
 }
@@ -44,11 +44,12 @@ variable "dns_zone" {
 }
 
 variable "ecs_cluster_ids" {
-  type        = "list"
+  type        = list(string)
   description = "List of ARNs of the ECS Cluster IDs"
 }
 
-variable "env" {}
+variable "env" {
+}
 
 variable "enable_script_checks" {
   description = "This controls whether health checks that execute scripts are enabled on this agent, and defaults to false"
@@ -56,7 +57,7 @@ variable "enable_script_checks" {
 }
 
 variable "hostname" {
-  description = "DNS Hostname for the bastion host. Defaults to ${VPC NAME}.${dns_zone} if hostname is not set"
+  description = "DNS Hostname for the bastion host. Defaults to $${VPC NAME}.$${dns_zone} if hostname is not set"
   default     = ""
 }
 
@@ -89,7 +90,7 @@ variable "s3_backup_bucket" {
 }
 
 variable "subnets" {
-  type        = "list"
+  type        = list(string)
   description = "List of subnets used to deploy the Consul alb"
 }
 
@@ -124,7 +125,8 @@ variable "leave_on_terminate" {
   default     = true
 }
 
-variable "vpc_id" {}
+variable "vpc_id" {
+}
 
 variable "sha_htpasswd_hash" {
   description = "Entries must be created with htpasswd -s for SHA encryption"
@@ -146,7 +148,7 @@ variable "oauth2_proxy_github_org" {
 
 variable "oauth2_proxy_github_team" {
   description = "list of teams that should have access defaults to empty list (allow all)"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -157,3 +159,4 @@ variable "oauth2_proxy_client_id" {
 variable "oauth2_proxy_client_secret" {
   description = "the OAuth Client Secret"
 }
+

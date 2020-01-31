@@ -26,7 +26,6 @@ data "aws_iam_policy_document" "consul_task_policy" {
       "arn:aws:s3:::${var.s3_backup_bucket}/*",
     ]
   }
-
   ##
 }
 
@@ -42,19 +41,19 @@ data "aws_iam_policy_document" "assume_role_consul_task" {
 }
 
 resource "aws_iam_role" "consul_task" {
-  path               = "${var.iam_path}"
-  assume_role_policy = "${data.aws_iam_policy_document.assume_role_consul_task.json}"
+  path               = var.iam_path
+  assume_role_policy = data.aws_iam_policy_document.assume_role_consul_task.json
 }
 
 resource "aws_iam_role_policy" "consul_ecs_task" {
-  role   = "${aws_iam_role.consul_task.id}"
-  policy = "${data.aws_iam_policy_document.consul_task_policy.json}"
+  role   = aws_iam_role.consul_task.id
+  policy = data.aws_iam_policy_document.consul_task_policy.json
 }
 
 # ecsServiceRole for consul
 
 resource "aws_iam_role" "ecsServiceRole" {
-  path = "${var.iam_path}"
+  path = var.iam_path
 
   assume_role_policy = <<EOF
 {
@@ -72,9 +71,11 @@ resource "aws_iam_role" "ecsServiceRole" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy_attachment" "attach-ecsServiceRole" {
-  role       = "${aws_iam_role.ecsServiceRole.name}"
+  role       = aws_iam_role.ecsServiceRole.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceRole"
 }
+
