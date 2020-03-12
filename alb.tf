@@ -20,6 +20,7 @@ resource "aws_alb" "consul" {
   }
 
   access_logs {
+    enabled = var.lb_logs_enabled
     bucket = var.alb_log_bucket
     prefix = "logs/elb/${data.aws_vpc.vpc.tags["Name"]}/consul"
   }
@@ -94,4 +95,3 @@ resource "aws_alb_listener_certificate" "consul_https" {
   listener_arn    = aws_alb_listener.consul_https[0].arn
   certificate_arn = data.aws_acm_certificate.cert[0].arn
 }
-
